@@ -1,0 +1,20 @@
+#!/bin/sh
+
+if [ "$1" == "stop" ]
+then
+ ps -ef | grep ./timerCode | grep -v grep | awk '{print $2}' | xargs kill -9
+ echo Timer was stoped.
+ exit 1
+fi
+
+mod=$([ -z $1  ] && echo "1500" || echo "$(($1*60))")
+
+echo Setup timer for "$(($mod / 60))" minutes.
+
+#sleep $mod
+
+afplay /System/Library/Sounds/Glass.aiff
+
+osascript -e 'tell app "System Events" to display dialog "Focus mode is finished, take a break." buttons {"Done!"}'
+
+exit 1
